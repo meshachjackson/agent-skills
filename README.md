@@ -26,7 +26,7 @@ cp agents/loop-verifier.md ~/.claude/agents/
 ## Requirements
 
 **Required for everything**
-- [Claude Code](https://code.claude.com/docs/en/skills) with skills and custom subagents (`~/.claude/skills`, `~/.claude/agents`). We have not tested other agents, and no minimum version is confirmed.
+- [Claude Code](https://code.claude.com/docs/en/skills) with skills and custom subagents (`~/.claude/skills`, `~/.claude/agents`). No minimum version is confirmed. Hermes has also been tested; see [docs/hermes.md](docs/hermes.md).
 - A shell. The verifier runs the `Check:` commands your contract names, so any tools those commands need (a test runner, for example) must be installed in the project.
 
 **Per skill**
@@ -122,7 +122,7 @@ Long sessions drift. refocus makes the agent restate the original goal, list wha
 
 ## Status
 
-Early. Written and used in Claude Code. The skills are plain Markdown, so they port, but only Claude Code is tested. Issues and pull requests are welcome.
+Early. Written and used in Claude Code. The skills are plain Markdown, so they port. One test pass on Hermes (Qwen3.6-35B-A3B) found refocus and merge-to-main fully compatible, and goal-loop and parallel-agent-waves workable when sub-agent context allows. See [docs/hermes.md](docs/hermes.md). Issues and pull requests are welcome.
 
 ## License
 
