@@ -35,7 +35,7 @@ cp agents/loop-verifier.md ~/.claude/agents/
 4. The verifier checks each criterion against real files and real commands. It returns PASS or FAIL with a fix list. It never fixes anything.
 5. On FAIL, the agent fixes only what failed, and the verifier rechecks only that. This repeats until PASS or the budget runs out (4 rounds by default).
 
-See a full contract in [examples/sample-contract.md](examples/sample-contract.md).
+See a full contract in [examples/sample-contract.md](examples/sample-contract.md), and a real run, including a failure, in [examples/live-run](examples/live-run/README.md). In that run the contract review caught two checks that could never fail, and the final verify caught an error in the author's own contract fix.
 
 **Where the idea comes from.** Anthropic does not publish a single named "loop architecture". This skill builds on two patterns it does describe:
 
@@ -72,14 +72,16 @@ See [examples/parallel-waves-demo.md](examples/parallel-waves-demo.md) for a wor
 - **Branches are never merged for you.** Between waves, the skill names each branch and asks. You stay in control of what lands.
 - **No fake parallelism.** If no two steps are independent, it says so and runs the plan normally.
 
-**How it can save tokens.** These are mechanisms, not benchmarks. We have not measured totals yet.
+**Does it save tokens? Not on small tasks.** We measured it once ([details](examples/measured-waves-run.md)). Four tiny, independent steps took one agent 111k tokens and 29.7 seconds. Four parallel agents took 440k tokens in about 24 seconds. Each agent cost about 110k tokens whether it built one module or four, so a fixed per-agent cost dominated.
 
-- **Cheaper models where they are enough.** Search, renames and test fixtures go to a small model. Only design-heavy steps use your strongest one.
-- **Smaller context per agent.** Each agent gets a brief with its task, its files and its rules, not the whole conversation.
-- **Short feedback loops.** The verifier reads a contract and an output, not a transcript. Rechecks cover only what failed.
-- **Budget caps.** Every contract has an iteration limit, so a stuck step stops instead of burning tokens.
+What that means:
 
-Running agents side by side can use more tokens in total than running them one at a time. What you get is the same work in less wall-clock time, with fewer wasted tokens per step.
+- **Waves buy time, not tokens.** Use them when steps are long enough that waiting for them costs more than the extra overhead.
+- **The overhead is per agent.** Fewer, bigger agents beat many tiny ones. The skill keeps small steps in the main session for this reason.
+- **Cheaper models are the real token lever.** Search, renames and test fixtures can run on a small model. Our test used one model tier in both arms, so it did not measure this.
+- **Budget caps still stop runaway steps.** Every contract has an iteration limit.
+
+This is one run on a deliberately easy task. Treat it as a first data point, not a benchmark.
 
 **Make it fit your setup.** The skill is written in terms of three capabilities, not specific tools:
 
