@@ -23,6 +23,23 @@ cp agents/loop-verifier.md ~/.claude/agents/
 
 `parallel-agent-waves` needs `goal-loop` and the `loop-verifier` agent. Install all three together.
 
+## Requirements
+
+**Required for everything**
+- [Claude Code](https://code.claude.com/docs/en/skills) with skills and custom subagents (`~/.claude/skills`, `~/.claude/agents`). We have not tested other agents, and no minimum version is confirmed.
+- A shell. The verifier runs the `Check:` commands your contract names, so any tools those commands need (a test runner, for example) must be installed in the project.
+
+**Per skill**
+
+| Skill | Needs | Optional |
+|---|---|---|
+| goal-loop | The `loop-verifier` agent from [agents/](agents/loop-verifier.md) | A `CLAUDE.md` with repo rules to copy into the contract |
+| parallel-agent-waves | `goal-loop`, `loop-verifier`, `git` with worktrees, and a way to start sub-agents (Claude Code's `Agent` tool) | An `advisor` tool or reviewer sub-agent; per-step model choice |
+| merge-to-main | `git` and the [GitHub CLI](https://cli.github.com/) (`gh`), signed in | None |
+| refocus | Nothing | A plan file or ticket to find the original goal |
+
+No packages to install. There is no code to build or run: each skill is a Markdown file.
+
 ## goal-loop
 
 **The problem.** You ask an agent to "add a flag and make sure it works". It adds the flag, runs nothing, and says it works. You find out later.

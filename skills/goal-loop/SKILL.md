@@ -6,6 +6,8 @@ version: 1.1.0
 
 # goal-loop
 
+Requires the `loop-verifier` agent (`agents/loop-verifier.md`) installed in `~/.claude/agents/`. Without it, stop and say so.
+
 You do the work; the `loop-verifier` agent grades it. Never grade your own work.
 
 Use for goal loops, exit criteria, verifiers, or "keep going until it passes", when "done" is easy to fake. Skip small one-step tasks.
