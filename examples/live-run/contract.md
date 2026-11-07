@@ -17,7 +17,7 @@
 4. A new function has a test.
    Check: `grep -c 'def test_' tests/test_core.py tests/test_cli.py 2>/dev/null` total is at least 2, and `python3 -m unittest discover -s tests -t .` exits 0.
 5. Rules respected.
-   Check: with fixed base commit `ecadf9a`, `(git diff --name-only ecadf9a; git ls-files -o --exclude-standard) | grep -v -E '^(textstats|tests)/'` prints nothing (changed and untracked files are only under `textstats/` or `tests/`; the contract file is committed already), and `grep -rhE '^(import|from) ' textstats | grep -v -E '^(import|from) (sys|json|argparse|textstats)'` prints nothing.
+   Check: with fixed base commit `ecadf9a`, `(git diff --name-only ecadf9a; git ls-files -o --exclude-standard) | grep -v -E '^(textstats/|tests/|docs/plans/2026-11-07-json-flag\.md$)'` prints nothing (changed and untracked files are only under `textstats/` or `tests/`, plus this contract file itself), and `grep -rhE '^(import|from) ' textstats | grep -v -E '^(import|from) (sys|json|argparse|textstats)'` prints nothing.
 
 ## Tests
 - `python3 -m unittest discover -s tests -t .` exits 0.
@@ -30,3 +30,6 @@
 - No pushes, no network.
 - Keep functions small; add a test for every new function.
 - Do not edit this contract after the first verify.
+
+## Amendments
+- Amendment 1 (user-approved after the first full verify): criterion 5 now allows this contract file in the diff. The first full verify failed only because the author's earlier fix edited the contract after naming the base commit. No other criterion changed.

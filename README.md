@@ -52,7 +52,7 @@ No packages to install. There is no code to build or run: each skill is a Markdo
 4. The verifier checks each criterion against real files and real commands. It returns PASS or FAIL with a fix list. It never fixes anything.
 5. On FAIL, the agent fixes only what failed, and the verifier rechecks only that. This repeats until PASS or the budget runs out (4 rounds by default).
 
-See a full contract in [examples/sample-contract.md](examples/sample-contract.md), and a real run, including a failure, in [examples/live-run](examples/live-run/README.md). In that run the contract review caught two checks that could never fail, and the final verify caught an error in the author's own contract fix.
+See a full contract in [examples/sample-contract.md](examples/sample-contract.md), and a real run, including two failures along the way, in [examples/live-run](examples/live-run/README.md). In that run the contract review caught two checks that could never fail, and the final verify caught an error in the author's own contract fix.
 
 **Where the idea comes from.** Anthropic does not publish a single named "loop architecture". This skill builds on two patterns it does describe:
 
